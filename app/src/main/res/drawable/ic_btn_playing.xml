@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:drawable="@drawable/ic_btn_play"
+        android:maxLevel="3333"
+        android:minLevel="0" />
+    <item
+        android:drawable="@drawable/ic_btn_play_2"
+        android:maxLevel="6666"
+        android:minLevel="3334" />
+    <item
+        android:drawable="@drawable/ic_btn_play_3"
+        android:maxLevel="10000"
+        android:minLevel="6667" />
+</level-list>

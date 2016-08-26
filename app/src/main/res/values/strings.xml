@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">每日英语</string>
+    <string name="app_s_name">DE</string>
+    <string name="title_all">All</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_about">About</string>
+    <string name="title_de">Daily English</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_once">Play once</string>
+    <string name="action_repeat">Repeat</string>
+    <string name="no_sentence">No sentence. Please open to fetch.</string>
+    <string name="loading">Loading. Please wait...</string>
+    <string name="refresh_no_network">No network, can not refresh.</string>
+    <string name="refresh_fail">Refresh failed.</string>
+    <string name="refreshing">Refreshing...</string>
+    <string name="refresh_finish">Refresh finished.</string>
+    <string name="already_got">Already got today\'s sentence.</string>
+    <string name="got_new">Got one new sentence.</string>
+    <string name="download_fail">Download failed.</string>
+    <string name="cannot_play">Can not play.</string>
+
+    <string name="no_sentence2">No sentences.</string>
+    <string name="no_favorite">No favorite.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

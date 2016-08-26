@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.xixicm.de.presentation.view.component.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.xixicm.de.presentation.view.component.CheckableLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:duplicateParentState="true"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:textColor="@color/list_item_text_color"
+            android:textSize="@dimen/detail_day_text_size" />
+
+        <com.xixicm.de.presentation.view.component.CheckableImageView
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:padding="@dimen/widget_margin"
+            android:src="@drawable/ic_favorite" />
+    </com.xixicm.de.presentation.view.component.CheckableLinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:duplicateParentState="true"
+        android:fillViewport="true">
+
+        <com.xixicm.de.presentation.view.component.CheckableLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:duplicateParentState="true"
+            android:orientation="vertical">
+
+            <com.android.volley.ui.NetworkImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/widget_margin"
+                android:layout_weight="1"
+                android:minHeight="@dimen/detail_pic_min_height"
+                android:scaleType="fitCenter" />
+
+            <com.xixicm.de.presentation.view.component.CheckableLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:duplicateParentState="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/en_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/widget_margin"
+                    android:duplicateParentState="true"
+                    android:textColor="@color/list_item_text_color"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/detail_content_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cn_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:textColor="@color/list_item_text_color"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/detail_content_text_size" />
+            </com.xixicm.de.presentation.view.component.CheckableLinearLayout>
+        </com.xixicm.de.presentation.view.component.CheckableLinearLayout>
+    </ScrollView>
+</com.xixicm.de.presentation.view.component.CheckableLinearLayout>
