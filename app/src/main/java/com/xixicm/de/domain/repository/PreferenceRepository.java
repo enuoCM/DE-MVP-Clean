@@ -15,13 +15,24 @@
  */
 package com.xixicm.de.domain.repository;
 
+import android.support.annotation.IntDef;
+
+import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.Repository;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * @author mc
  */
 public interface PreferenceRepository extends Repository {
+    @IntDef({Constants.PLAY_REPEAT, Constants.PLAY_ONCE})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface PlayStyle {
+    }
+
     int getPlayStyle(int defaultStyle);
 
-    void setPlayStyle(int style);
+    void setPlayStyle(@PlayStyle int style);
 }

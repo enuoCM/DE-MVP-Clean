@@ -62,7 +62,7 @@ public class Preferences implements PreferenceRepository {
     }
 
     @Override
-    public void setPlayStyle(int style) {
+    public void setPlayStyle(@PlayStyle int style) {
         if (Constants.PLAY_REPEAT != style && Constants.PLAY_ONCE != style) {
             throw new IllegalArgumentException("Unsupported play style:" + style);
         }
