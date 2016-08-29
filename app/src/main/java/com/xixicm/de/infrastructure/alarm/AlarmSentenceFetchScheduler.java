@@ -15,11 +15,11 @@
  */
 package com.xixicm.de.infrastructure.alarm;
 
+import android.support.annotation.NonNull;
+
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.util.LogUtils;
 import com.xixicm.de.domain.interactor.SentenceFetchScheduler;
-
-import org.greenrobot.greendao.annotation.NotNull;
 
 /**
  * Use Android Alarm scheme to make the schedule.
@@ -34,7 +34,7 @@ public class AlarmSentenceFetchScheduler implements SentenceFetchScheduler {
         mFetchAlarmManager = fetchAlarmManager;
     }
 
-    public static synchronized AlarmSentenceFetchScheduler getInstance(@NotNull FetchAlarmManager fetchAlarmManager) {
+    public static synchronized AlarmSentenceFetchScheduler getInstance(@NonNull FetchAlarmManager fetchAlarmManager) {
         if (sInstance == null) {
             sInstance = new AlarmSentenceFetchScheduler(fetchAlarmManager);
         }
