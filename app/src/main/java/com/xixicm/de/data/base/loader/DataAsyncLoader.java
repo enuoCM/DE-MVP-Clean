@@ -1,6 +1,4 @@
 /*
- * Copyright (C) 2016 mc
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,9 +16,6 @@ package com.xixicm.de.data.base.loader;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-/**
- * @author mc
- */
 public abstract class DataAsyncLoader<Data> extends AsyncTaskLoader<Data> {
     // We hold a reference to the Loader’s data here.
     private Data mData;
