@@ -19,6 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
@@ -43,6 +44,7 @@ public class DEFetchReceiver extends BroadcastReceiver {
         DefaultUseCaseHandler.createParallelUCHandler().execute(getAutoFetchTodaysSentenceUC(context));
     }
 
+    @VisibleForTesting
     public AutoFetchTodaysSentenceUC getAutoFetchTodaysSentenceUC(Context context) {
         return new AutoFetchTodaysSentenceUC(ServiceSentenceFetchExecutor.getInstance(context));
     }

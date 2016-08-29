@@ -15,6 +15,8 @@
  */
 package com.xixicm.de.presentation.presenter;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.domain.Constants;
@@ -182,6 +184,7 @@ public class MainPresenter extends AbstractMvpPresenter<Main.View, Void> impleme
         mView.closeDrawer();
     }
 
+    @VisibleForTesting
     public EventBus getEventBus() {
         return EventBus.getDefault();
     }

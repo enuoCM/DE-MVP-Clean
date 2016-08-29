@@ -17,6 +17,7 @@ package com.xixicm.de.presentation.presenter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.handler.UseCaseHandler;
@@ -164,6 +165,7 @@ public class SentenceListPresenter extends AbstractMvpPresenter<SentenceList.Vie
         getEventBus().removeStickyEvent(FocusedSentenceEvent.class);
     }
 
+    @VisibleForTesting
     public EventBus getEventBus() {
         return EventBus.getDefault();
     }

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.repository.PreferenceRepository;
@@ -51,8 +52,8 @@ public class Preferences implements PreferenceRepository {
         return mPrefs;
     }
 
-    // for test
-    public void setSharedPreferences(SharedPreferences preferences) {
+    @VisibleForTesting
+    void setSharedPreferences(SharedPreferences preferences) {
         mPrefs = preferences;
     }
 

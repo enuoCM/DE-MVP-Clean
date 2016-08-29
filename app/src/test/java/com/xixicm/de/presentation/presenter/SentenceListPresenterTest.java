@@ -77,7 +77,6 @@ public class SentenceListPresenterTest {
     @Captor
     private ArgumentCaptor<UpdateManualFetchFabEvent> mUpdateManualFetchFabEventCaptor;
 
-
     private SentenceListPresenter mSentenceListPresenter;
     @Mock
     private List<? extends Sentence> mSentences;

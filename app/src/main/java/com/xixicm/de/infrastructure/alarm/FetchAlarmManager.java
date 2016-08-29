@@ -19,6 +19,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
@@ -72,6 +73,7 @@ public class FetchAlarmManager {
         getAlarmManager().set(AlarmManager.ELAPSED_REALTIME, time, getPendingIntent());
     }
 
+    @VisibleForTesting
     public AlarmManager getAlarmManager() {
         return (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
     }

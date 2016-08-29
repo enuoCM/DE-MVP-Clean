@@ -17,6 +17,7 @@ package com.xixicm.de.infrastructure.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.util.LogUtils;
@@ -29,6 +30,7 @@ public class ServiceSentenceFetchExecutor implements SentenceFetchExecutor {
     private static ServiceSentenceFetchExecutor sInstance;
     Context mContext;
 
+    @VisibleForTesting
     ServiceSentenceFetchExecutor(Context context) {
         mContext = context.getApplicationContext();
     }

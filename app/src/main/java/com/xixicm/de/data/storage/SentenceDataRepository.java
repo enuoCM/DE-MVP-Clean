@@ -17,6 +17,7 @@ package com.xixicm.de.data.storage;
 
 import android.net.Uri;
 import android.os.SystemClock;
+import android.support.annotation.VisibleForTesting;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -326,26 +327,27 @@ public class SentenceDataRepository implements SentenceRepository {
         getEventBus().post(scheduleFetchEvent);
     }
 
+    @VisibleForTesting
     public EventBus getEventBus() {
         return EventBus.getDefault();
     }
 
-    // for test
+    @VisibleForTesting
     public boolean isFetchingSentence() {
         synchronized (mFetchingLock) {
             return mIsFetchingSentence;
         }
     }
 
-    // for test
+    @VisibleForTesting
     public boolean isFetchingAudio() {
         synchronized (mFetchingLock) {
             return mIsFetchingAudio;
         }
     }
 
-    // for test
-    public void removeDownloadedAudio(String audioUrl) {
+    @VisibleForTesting
+    void removeDownloadedAudio(String audioUrl) {
         Cache cache = DEVolley.getInstance().getCache();
         if (cache != null) {
             // ignore expired setting

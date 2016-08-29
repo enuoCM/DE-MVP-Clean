@@ -16,6 +16,7 @@
 package com.xixicm.de.infrastructure.alarm;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
 import com.xixicm.de.domain.base.util.LogUtils;
@@ -30,6 +31,7 @@ public class AlarmSentenceFetchScheduler implements SentenceFetchScheduler {
     private static AlarmSentenceFetchScheduler sInstance;
     private FetchAlarmManager mFetchAlarmManager;
 
+    @VisibleForTesting
     AlarmSentenceFetchScheduler(FetchAlarmManager fetchAlarmManager) {
         mFetchAlarmManager = fetchAlarmManager;
     }

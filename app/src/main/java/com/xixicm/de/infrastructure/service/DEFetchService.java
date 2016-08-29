@@ -17,6 +17,7 @@ package com.xixicm.de.infrastructure.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.data.storage.SentenceDataRepository;
 
@@ -38,6 +39,7 @@ public class DEFetchService extends IntentService {
         }
     }
 
+    @VisibleForTesting
     public SentenceDataRepository getSentenceDataRepository() {
         return SentenceDataRepository.getInstance();
     }
