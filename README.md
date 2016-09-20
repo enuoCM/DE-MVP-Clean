@@ -11,6 +11,7 @@ External Libs
 
 This project use this external libs
 
+* [CA - Clean Architecture](https://github.com/enuoCM/CA) An easy Clean Architecture Framework library.
 * [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 * [ButterKnife](http://jakewharton.github.io/butterknife/)
 * [greendao](https://github.com/greenrobot/greenDAO)
