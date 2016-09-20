@@ -16,8 +16,8 @@
 package com.xixicm.de.domain.interactor;
 
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.usecase.AbstractUseCase;
-import com.xixicm.de.domain.base.util.LogUtils;
+import com.xixicm.ca.domain.usecase.AbstractUseCase;
+import com.xixicm.ca.domain.util.LogUtils;
 import com.xixicm.de.domain.repository.SentenceRepository;
 
 /**

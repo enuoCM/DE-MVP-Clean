@@ -15,7 +15,7 @@
  */
 package com.xixicm.de.domain.interactor;
 
-import com.xixicm.de.domain.base.usecase.UseCase;
+import com.xixicm.ca.domain.usecase.UseCase;
 
 /**
  * @author mc

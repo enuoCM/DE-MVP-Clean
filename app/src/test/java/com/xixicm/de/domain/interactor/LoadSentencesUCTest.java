@@ -16,7 +16,7 @@
 package com.xixicm.de.domain.interactor;
 
 import com.xixicm.de.data.entity.SentenceEntity;
-import com.xixicm.de.domain.base.usecase.UseCase;
+import com.xixicm.ca.domain.usecase.UseCase;
 import com.xixicm.de.domain.model.Sentence;
 
 import org.junit.Before;

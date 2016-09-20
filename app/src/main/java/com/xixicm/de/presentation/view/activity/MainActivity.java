@@ -27,19 +27,29 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xixicm.de.R;
+import com.xixicm.de.data.entity.SentenceEntity;
+import com.xixicm.de.data.storage.dao.DaoManager;
+import com.xixicm.de.data.storage.dao.SentenceEntityDao;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.presentation.base.mvp.MvpActivity;
+import com.xixicm.de.domain.model.Sentence;
+import com.xixicm.de.domain.model.event.SentenceChangedEvent;
+import com.xixicm.ca.presentation.mvp.MvpActivity;
 import com.xixicm.de.presentation.contract.Main;
 import com.xixicm.de.presentation.presenter.MainPresenter;
 import com.xixicm.de.presentation.view.fragment.AboutFragment;
 import com.xixicm.de.presentation.view.fragment.SentenceDetailFragment;
 import com.xixicm.de.presentation.view.fragment.SentenceListFragment;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +68,48 @@ public class MainActivity extends MvpActivity<Void, Main.View, Main.Presenter<Ma
     private TextView mDayTextView;
     private ObjectAnimator mManualFetchFabAnimator;
     FragmentManager mFragmentManager;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(1, 1, 1, "add");
+        menu.add(2, 2, 2, "delete");
+        return true;
+
+    }
+
+    public void duplicateSentences() {
+        List<SentenceEntity> se = DaoManager.getInstance().getSentenceEntityDao().queryBuilder().orderDesc(SentenceEntityDao.Properties.Dateline).list();
+        for (Sentence s : se) {
+            Sentence newS = new SentenceEntity();
+            newS.setAllContent(s.getAllContent());
+            newS.setContent(s.getContent());
+            newS.setDateline(s.getDateline().replace("2016", "2017"));
+            newS.setSid("AAAA");
+            newS.setIsStar(false);
+            DaoManager.getInstance().getDaoSession().insert(newS);
+            break;
+        }
+        EventBus.getDefault().post(new SentenceChangedEvent());
+    }
+
+    private void deleateFakeSentences() {
+        List<SentenceEntity> se = DaoManager.getInstance().getSentenceEntityDao().queryBuilder().where(SentenceEntityDao.Properties.Sid.eq("AAAA")).list();
+        DaoManager.getInstance().getSentenceEntityDao().deleteInTx(se);
+        EventBus.getDefault().post(new SentenceChangedEvent());
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 1) {
+            duplicateSentences();
+            return true;
+        } else if (item.getItemId() == 2) {
+            deleateFakeSentences();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

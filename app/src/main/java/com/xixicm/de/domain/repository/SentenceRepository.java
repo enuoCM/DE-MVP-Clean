@@ -17,7 +17,7 @@ package com.xixicm.de.domain.repository;
 
 import android.net.Uri;
 
-import com.xixicm.de.domain.base.Repository;
+import com.xixicm.ca.domain.Repository;
 import com.xixicm.de.domain.model.Sentence;
 
 import java.io.File;

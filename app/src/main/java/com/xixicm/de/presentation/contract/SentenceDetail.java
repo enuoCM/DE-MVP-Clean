@@ -19,8 +19,8 @@ import android.support.annotation.NonNull;
 
 import com.xixicm.de.domain.model.Sentence;
 import com.xixicm.de.domain.model.event.FetchingAudioEvent;
-import com.xixicm.de.presentation.base.mvp.MvpPresenter;
-import com.xixicm.de.presentation.base.mvp.MvpView;
+import com.xixicm.ca.presentation.mvp.MvpPresenter;
+import com.xixicm.ca.presentation.mvp.MvpView;
 import com.xixicm.de.presentation.model.view.SentenceDetailViewModel;
 
 import java.util.List;

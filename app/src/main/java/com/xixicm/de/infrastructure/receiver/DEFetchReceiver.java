@@ -22,9 +22,9 @@ import android.net.ConnectivityManager;
 import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
-import com.xixicm.de.domain.base.util.LogUtils;
-import com.xixicm.de.domain.base.util.NetworkUtils;
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.domain.util.LogUtils;
+import com.xixicm.ca.domain.util.NetworkUtils;
 import com.xixicm.de.domain.interactor.AutoFetchTodaysSentenceUC;
 import com.xixicm.de.infrastructure.service.ServiceSentenceFetchExecutor;
 

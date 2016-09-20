@@ -17,8 +17,8 @@ package com.xixicm.de.presentation.contract;
 
 import com.xixicm.de.domain.model.event.FetchingEvent;
 import com.xixicm.de.domain.model.event.UpdateManualFetchFabEvent;
-import com.xixicm.de.presentation.base.mvp.MvpPresenter;
-import com.xixicm.de.presentation.base.mvp.MvpView;
+import com.xixicm.ca.presentation.mvp.MvpPresenter;
+import com.xixicm.ca.presentation.mvp.MvpView;
 
 /**
  * @author mc

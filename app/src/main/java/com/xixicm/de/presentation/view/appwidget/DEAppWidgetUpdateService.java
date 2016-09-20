@@ -22,7 +22,7 @@ import com.xixicm.de.R;
 import com.xixicm.de.data.entity.SentenceEntity;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
 import com.xixicm.de.domain.interactor.AutoFetchTodaysSentenceUC;
 import com.xixicm.de.domain.interactor.LoadLatestSentenceUC;
 import com.xixicm.de.domain.model.Sentence;

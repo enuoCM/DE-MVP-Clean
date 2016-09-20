@@ -20,13 +20,13 @@ import android.content.Context;
 import com.xixicm.de.data.net.DEVolley;
 import com.xixicm.de.data.storage.dao.DaoManager;
 import com.xixicm.de.data.storage.pref.Preferences;
-import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
-import com.xixicm.de.domain.base.util.LogUtils;
-import com.xixicm.de.domain.base.util.NetworkUtils;
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.domain.util.LogUtils;
+import com.xixicm.ca.domain.util.NetworkUtils;
 import com.xixicm.de.domain.interactor.AutoFetchTodaysSentenceUC;
 import com.xixicm.de.infrastructure.alarm.FetchAlarmManager;
-import com.xixicm.de.infrastructure.base.util.AndroidLogger;
-import com.xixicm.de.infrastructure.base.util.AndroidNetworkChecker;
+import com.xixicm.ca.infrastructure.util.AndroidLogger;
+import com.xixicm.ca.infrastructure.util.AndroidNetworkChecker;
 import com.xixicm.de.infrastructure.service.ServiceSentenceFetchExecutor;
 import com.xixicm.de.presentation.view.appwidget.WidgetManager;
 

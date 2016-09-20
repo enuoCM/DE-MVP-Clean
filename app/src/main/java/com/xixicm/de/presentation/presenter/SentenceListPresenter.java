@@ -20,15 +20,15 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.UseCaseHandler;
-import com.xixicm.de.domain.base.util.LogUtils;
+import com.xixicm.ca.domain.handler.UseCaseHandler;
+import com.xixicm.ca.domain.util.LogUtils;
 import com.xixicm.de.domain.interactor.LoadSentencesUC;
 import com.xixicm.de.domain.interactor.UpdateFavoriteSentenceUC;
 import com.xixicm.de.domain.model.Sentence;
 import com.xixicm.de.domain.model.event.FocusedSentenceEvent;
 import com.xixicm.de.domain.model.event.SentenceChangedEvent;
 import com.xixicm.de.domain.model.event.UpdateManualFetchFabEvent;
-import com.xixicm.de.presentation.base.mvp.AbstractMvpPresenter;
+import com.xixicm.ca.presentation.mvp.AbstractMvpPresenter;
 import com.xixicm.de.presentation.contract.SentenceList;
 import com.xixicm.de.presentation.model.view.SentenceListViewModel;
 

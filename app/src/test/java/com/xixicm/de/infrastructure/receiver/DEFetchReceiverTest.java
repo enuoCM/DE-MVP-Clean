@@ -19,8 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import com.xixicm.de.domain.base.util.NetworkChecker;
-import com.xixicm.de.domain.base.util.NetworkUtils;
+import com.xixicm.ca.domain.util.NetworkChecker;
+import com.xixicm.ca.domain.util.NetworkUtils;
 import com.xixicm.de.domain.interactor.AutoFetchTodaysSentenceUC;
 
 import org.junit.Before;

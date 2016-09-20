@@ -17,7 +17,7 @@ package com.xixicm.de.presentation.presenter;
 
 import com.xixicm.de.R;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.UseCaseHandler;
+import com.xixicm.ca.domain.handler.UseCaseHandler;
 import com.xixicm.de.domain.interactor.ManuallyFetchTodaysSentenceUC;
 import com.xixicm.de.domain.model.event.FetchingEvent;
 import com.xixicm.de.domain.model.event.FocusedSentenceEvent;

@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.xixicm.de.domain.base.usecase.UseCase;
+import com.xixicm.ca.domain.usecase.UseCase;
 import com.xixicm.de.domain.model.Sentence;
 
 import org.junit.Before;

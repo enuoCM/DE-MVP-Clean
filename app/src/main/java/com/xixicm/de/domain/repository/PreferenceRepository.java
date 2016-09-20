@@ -18,7 +18,7 @@ package com.xixicm.de.domain.repository;
 import android.support.annotation.IntDef;
 
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.Repository;
+import com.xixicm.ca.domain.Repository;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

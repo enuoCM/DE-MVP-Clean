@@ -21,7 +21,7 @@ import com.xixicm.de.R;
 import com.xixicm.de.data.entity.SentenceEntity;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.UseCaseHandler;
+import com.xixicm.ca.domain.handler.UseCaseHandler;
 import com.xixicm.de.domain.interactor.FetchSentenceAudioUC;
 import com.xixicm.de.domain.interactor.GetPlayStyleUC;
 import com.xixicm.de.domain.interactor.LoadSentenceUC;

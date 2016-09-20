@@ -19,7 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.util.LogUtils;
+import com.xixicm.ca.domain.util.LogUtils;
 import com.xixicm.de.domain.interactor.SentenceFetchScheduler;
 
 /**

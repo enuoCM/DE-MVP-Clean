@@ -28,13 +28,13 @@ import android.widget.TextView;
 
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
-import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
 import com.xixicm.de.domain.interactor.LoadSentencesUC;
 import com.xixicm.de.domain.interactor.UpdateFavoriteSentenceUC;
 import com.xixicm.de.domain.model.Sentence;
 import com.xixicm.de.infrastructure.loader.AsyncTaskSentenceLoadExecutor;
-import com.xixicm.de.presentation.base.handler.UseCaseAsyncUIHandler;
-import com.xixicm.de.presentation.base.mvp.MvpFragment;
+import com.xixicm.ca.presentation.handler.UseCaseAsyncUIHandler;
+import com.xixicm.ca.presentation.mvp.MvpFragment;
 import com.xixicm.de.presentation.contract.SentenceList;
 import com.xixicm.de.presentation.model.view.SentenceListViewModel;
 import com.xixicm.de.presentation.presenter.SentenceListPresenter;

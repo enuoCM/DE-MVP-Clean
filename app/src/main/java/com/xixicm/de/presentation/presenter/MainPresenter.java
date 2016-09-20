@@ -20,14 +20,14 @@ import android.support.annotation.VisibleForTesting;
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.UseCaseHandler;
+import com.xixicm.ca.domain.handler.UseCaseHandler;
 import com.xixicm.de.domain.interactor.ManuallyFetchTodaysSentenceUC;
 import com.xixicm.de.domain.interactor.RepositorySentenceFetchExecutor;
 import com.xixicm.de.domain.model.event.FetchingEvent;
 import com.xixicm.de.domain.model.event.FocusedSentenceEvent;
 import com.xixicm.de.domain.model.event.UpdateManualFetchFabEvent;
-import com.xixicm.de.presentation.base.handler.UseCaseAsyncUIHandler;
-import com.xixicm.de.presentation.base.mvp.AbstractMvpPresenter;
+import com.xixicm.ca.presentation.handler.UseCaseAsyncUIHandler;
+import com.xixicm.ca.presentation.mvp.AbstractMvpPresenter;
 import com.xixicm.de.presentation.contract.Main;
 
 import org.greenrobot.eventbus.EventBus;

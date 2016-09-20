@@ -22,8 +22,8 @@ import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 
 import com.xixicm.de.domain.Constants;
-import com.xixicm.de.domain.base.handler.DefaultUseCaseHandler;
-import com.xixicm.de.domain.base.util.LogUtils;
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.domain.util.LogUtils;
 import com.xixicm.de.domain.interactor.ScheduleFetchTodaysSentenceUC;
 import com.xixicm.de.domain.model.event.ScheduleFetchEvent;
 import com.xixicm.de.infrastructure.service.DEFetchService;

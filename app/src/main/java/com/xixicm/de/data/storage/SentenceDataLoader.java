@@ -17,7 +17,7 @@ package com.xixicm.de.data.storage;
 
 import android.content.Context;
 
-import com.xixicm.de.data.base.loader.DataAsyncLoader;
+import com.xixicm.ca.data.loader.DataAsyncLoader;
 import com.xixicm.de.domain.model.Sentence;
 
 import java.util.List;
