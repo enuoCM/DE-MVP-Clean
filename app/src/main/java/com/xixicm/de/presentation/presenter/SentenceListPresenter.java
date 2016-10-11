@@ -63,7 +63,7 @@ public class SentenceListPresenter extends AbstractMvpPresenter<SentenceList.Vie
 
     @Nullable
     @Override
-    protected SentenceListViewModel createViewMode() {
+    protected SentenceListViewModel createViewModel() {
         return new SentenceListViewModel();
     }
 

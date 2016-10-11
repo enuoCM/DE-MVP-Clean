@@ -101,7 +101,7 @@ public class SentenceListPresenterTest {
 
     @Test
     public void testCreateViewMode() {
-        assertNotNull(mSentenceListPresenter.createViewMode());
+        assertNotNull(mSentenceListPresenter.createViewModel());
     }
 
     @Test

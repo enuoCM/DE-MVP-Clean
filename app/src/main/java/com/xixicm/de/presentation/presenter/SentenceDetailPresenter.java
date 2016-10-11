@@ -401,7 +401,7 @@ public class SentenceDetailPresenter extends AbstractMvpPresenter<SentenceDetail
 
     @Nullable
     @Override
-    protected SentenceDetailViewModel createViewMode() {
+    protected SentenceDetailViewModel createViewModel() {
         return new SentenceDetailViewModel();
     }
 

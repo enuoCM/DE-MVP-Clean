@@ -156,7 +156,7 @@ public class SentenceDetailPresenterTest {
 
     @Test
     public void testCreateViewMode() {
-        assertNotNull(mSentenceDetailPresenter.createViewMode());
+        assertNotNull(mSentenceDetailPresenter.createViewModel());
     }
 
 
