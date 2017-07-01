@@ -82,7 +82,7 @@ public class MainPresenterTest {
     @Test
     public void testFetchTodaysSentence() {
         mMainPresenter.fetchTodaysSentence();
-        verify(mUseCaseHandler).execute(mFetchTodaysSentenceUseCase);
+        verify(mFetchTodaysSentenceUseCase).execute(mUseCaseHandler);
     }
 
     @Test

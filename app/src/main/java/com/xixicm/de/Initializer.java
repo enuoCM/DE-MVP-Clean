@@ -17,6 +17,7 @@ package com.xixicm.de;
 
 import android.content.Context;
 
+import com.xixicm.ca.domain.handler.Handlers;
 import com.xixicm.de.data.net.DEVolley;
 import com.xixicm.de.data.storage.dao.DaoManager;
 import com.xixicm.de.data.storage.pref.Preferences;
@@ -56,7 +57,7 @@ public class Initializer {
         FetchAlarmManager.init(context);
 
         // trigger to auto fetch in service
-        AutoFetchTodaysSentenceUC autoFetchTodaysSentenceUC = new AutoFetchTodaysSentenceUC(ServiceSentenceFetchExecutor.getInstance(context));
-        DefaultUseCaseHandler.createParallelUCHandler().execute(autoFetchTodaysSentenceUC);
+        new AutoFetchTodaysSentenceUC(ServiceSentenceFetchExecutor.getInstance(context))
+                .execute(Handlers.asyncParallelReqSyncRes());
     }
 }

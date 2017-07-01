@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 
+import com.xixicm.ca.domain.handler.Handlers;
 import com.xixicm.de.domain.Constants;
 import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
 import com.xixicm.ca.domain.util.LogUtils;
@@ -53,9 +54,8 @@ public class FetchAlarmManager {
     @Subscribe
     public void onScheduleNextFetch(ScheduleFetchEvent event) {
         LogUtils.v(Constants.TAG, "onScheduleNextFetch: " + event);
-        ScheduleFetchTodaysSentenceUC scheduleFetchTodaysSentenceUC = new ScheduleFetchTodaysSentenceUC(AlarmSentenceFetchScheduler.getInstance(this));
-        scheduleFetchTodaysSentenceUC.setRequestValue(event);
-        DefaultUseCaseHandler.createParallelUCHandler().execute(scheduleFetchTodaysSentenceUC);
+        new ScheduleFetchTodaysSentenceUC(AlarmSentenceFetchScheduler.getInstance(this)).requestParams(event)
+                .execute(Handlers.asyncParallelReqSyncRes());
     }
 
     public static void init(Context context) {

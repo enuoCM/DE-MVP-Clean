@@ -15,6 +15,7 @@
  */
 package com.xixicm.de.presentation.presenter;
 
+import com.xixicm.ca.domain.usecase.UseCase;
 import com.xixicm.de.data.entity.SentenceEntity;
 import com.xixicm.ca.domain.handler.UseCaseHandler;
 import com.xixicm.de.domain.interactor.LoadSentencesUC;
@@ -88,7 +89,11 @@ public class SentenceListPresenterTest {
         mModel = new SentenceListViewModel();
         mModel.setIsFavoriteList(false);
         mSentenceListPresenter.attachView(mView, mModel);
+        when(mLoadSentencesUC.requestParams(any(LoadSentencesUC.LoadSentencesRequestParms.class))).thenReturn(mLoadSentencesUC);
+        when(mLoadSentencesUC.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mLoadSentencesUC);
         mSentenceListPresenter.setLoadSentencesUCAndHandler(mLoadSentencesUC, mLoadSentencesUseCaseHandler);
+        when(mUpdateFavoriteSentenceUC.requestParams(any(Sentence.class))).thenReturn(mUpdateFavoriteSentenceUC);
+        when(mUpdateFavoriteSentenceUC.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mUpdateFavoriteSentenceUC);
         mSentenceListPresenter.setUpdateFavoriteSentenceUCAndHandler(mUpdateFavoriteSentenceUC, mUpdateFavoriteSentenceUseCaseHandler);
         mSentenceListPresenter = spy(mSentenceListPresenter);
         when(mSentenceListPresenter.getEventBus()).thenReturn(mEventBus);
@@ -109,13 +114,13 @@ public class SentenceListPresenterTest {
         mSentenceListPresenter.loadSentences(true);
         // show loading
         verify(mView).setLoadingIndicator(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // empty list
         callback.onSentencesGet(new ArrayList<Sentence>());
@@ -128,13 +133,13 @@ public class SentenceListPresenterTest {
         mSentenceListPresenter.loadSentences(true);
         // show loading
         verify(mView).setLoadingIndicator(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // not empty list
         when(mSentences.size()).thenReturn(3);
@@ -148,13 +153,13 @@ public class SentenceListPresenterTest {
         mSentenceListPresenter.loadSentences(true);
         // show loading
         verify(mView).setLoadingIndicator(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // need auto focused
         mModel.setNeedAutoFocused(true);
@@ -181,14 +186,14 @@ public class SentenceListPresenterTest {
         mSentenceListPresenter.loadSentences(false);
         // don not show loading
         verify(mView, times(0)).setLoadingIndicator(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         // mLoadSentencesUC#mLoadSentenceCallback is not initialized under this test
         assertNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
     }
 
     @Test
@@ -209,8 +214,8 @@ public class SentenceListPresenterTest {
         mSentenceListPresenter.setFavorite(sentence, true);
         assertTrue(sentence.getIsStar());
         // execute update
-        verify(mUpdateFavoriteSentenceUC).setRequestValue(sentence);
-        verify(mUpdateFavoriteSentenceUseCaseHandler).execute(mUpdateFavoriteSentenceUC);
+        verify(mUpdateFavoriteSentenceUC).requestParams(sentence);
+        verify(mUpdateFavoriteSentenceUC).execute(mUpdateFavoriteSentenceUseCaseHandler);
     }
 
     @Test
@@ -219,8 +224,8 @@ public class SentenceListPresenterTest {
         mSentenceListPresenter.setFavorite(sentence, false);
         assertFalse(sentence.getIsStar());
         // execute update
-        verify(mUpdateFavoriteSentenceUC).setRequestValue(sentence);
-        verify(mUpdateFavoriteSentenceUseCaseHandler).execute(mUpdateFavoriteSentenceUC);
+        verify(mUpdateFavoriteSentenceUC).requestParams(sentence);
+        verify(mUpdateFavoriteSentenceUC).execute(mUpdateFavoriteSentenceUseCaseHandler);
     }
 
     @Test

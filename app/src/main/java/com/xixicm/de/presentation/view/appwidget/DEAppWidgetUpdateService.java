@@ -18,6 +18,7 @@ package com.xixicm.de.presentation.view.appwidget;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.xixicm.ca.domain.handler.Handlers;
 import com.xixicm.de.R;
 import com.xixicm.de.data.entity.SentenceEntity;
 import com.xixicm.de.data.storage.SentenceDataRepository;
@@ -50,9 +51,8 @@ public class DEAppWidgetUpdateService extends IntentService {
                 public void onLatestSentenceGot(Sentence sentence) {
                     if (sentence == null) {
                         // trigger to auto fetch in service
-                        AutoFetchTodaysSentenceUC autoFetchTodaysSentenceUC
-                                = new AutoFetchTodaysSentenceUC(ServiceSentenceFetchExecutor.getInstance(DEAppWidgetUpdateService.this));
-                        DefaultUseCaseHandler.createParallelUCHandler().execute(autoFetchTodaysSentenceUC);
+                        new AutoFetchTodaysSentenceUC(ServiceSentenceFetchExecutor.getInstance(DEAppWidgetUpdateService.this))
+                                .execute(Handlers.asyncParallelReqSyncRes());
                         sentence = new SentenceEntity();
                         // fake sentence
                         final String today = Constants.SHORT_DATEFORMAT.format(new Date());

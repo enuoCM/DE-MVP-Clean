@@ -19,7 +19,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -32,11 +31,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.presentation.handler.AndroidHandlers;
+import com.xixicm.ca.presentation.mvp.MvpFragment;
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.data.storage.pref.Preferences;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
 import com.xixicm.de.domain.interactor.FetchSentenceAudioUC;
 import com.xixicm.de.domain.interactor.GetPlayStyleUC;
 import com.xixicm.de.domain.interactor.LoadSentencesUC;
@@ -45,8 +46,6 @@ import com.xixicm.de.domain.interactor.UpdateFavoriteSentenceUC;
 import com.xixicm.de.domain.model.Sentence;
 import com.xixicm.de.infrastructure.loader.AsyncTaskSentenceLoadExecutor;
 import com.xixicm.de.infrastructure.media.AudioPlayer;
-import com.xixicm.ca.presentation.handler.UseCaseAsyncUIHandler;
-import com.xixicm.ca.presentation.mvp.MvpFragment;
 import com.xixicm.de.presentation.contract.SentenceDetail;
 import com.xixicm.de.presentation.model.view.SentenceDetailViewModel;
 import com.xixicm.de.presentation.presenter.SentenceDetailPresenter;
@@ -97,14 +96,14 @@ public class SentenceDetailFragment extends MvpFragment<SentenceDetailViewModel,
         // because we use async task loader, we can use sync handler here
         presenter.setLoadSentencesUCAndHandler(loadSentencesUC, DefaultUseCaseHandler.createSyncUCHandler());
         UpdateFavoriteSentenceUC updateFavoriteSentenceUC = new UpdateFavoriteSentenceUC(SentenceDataRepository.getInstance());
-        presenter.setUpdateFavoriteSentenceUCAndHandler(updateFavoriteSentenceUC, UseCaseAsyncUIHandler.getInstance());
+        presenter.setUpdateFavoriteSentenceUCAndHandler(updateFavoriteSentenceUC, AndroidHandlers.asyncParallelReqSyncRes());
         SetPlayStyleUC setPlayStyleUC = new SetPlayStyleUC(Preferences.getInstance());
         presenter.setSetPlayStyleUCAndHandler(setPlayStyleUC, DefaultUseCaseHandler.createSerialUCHandler());
         GetPlayStyleUC getPlayStyleUCForPrepareMenu = new GetPlayStyleUC(Preferences.getInstance());
         GetPlayStyleUC getPlayStyleUCForPlayAudio = new GetPlayStyleUC(Preferences.getInstance());
-        presenter.setGetPlayStyleUCAndHandler(getPlayStyleUCForPrepareMenu, getPlayStyleUCForPlayAudio, UseCaseAsyncUIHandler.getInstance());
+        presenter.setGetPlayStyleUCAndHandler(getPlayStyleUCForPrepareMenu, getPlayStyleUCForPlayAudio, AndroidHandlers.asyncParallelReqSyncRes());
         FetchSentenceAudioUC fetchSentenceAudioUC = new FetchSentenceAudioUC(SentenceDataRepository.getInstance());
-        presenter.setFetchSentenceAudioUCAndHandler(fetchSentenceAudioUC, UseCaseAsyncUIHandler.getInstance());
+        presenter.setFetchSentenceAudioUCAndHandler(fetchSentenceAudioUC, AndroidHandlers.asyncParallelReqSyncRes());
         return presenter;
     }
 

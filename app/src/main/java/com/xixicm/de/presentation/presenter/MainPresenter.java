@@ -17,17 +17,17 @@ package com.xixicm.de.presentation.presenter;
 
 import android.support.annotation.VisibleForTesting;
 
+import com.xixicm.ca.domain.handler.UseCaseHandler;
+import com.xixicm.ca.presentation.handler.AndroidHandlers;
+import com.xixicm.ca.presentation.mvp.AbstractMvpPresenter;
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.ca.domain.handler.UseCaseHandler;
 import com.xixicm.de.domain.interactor.ManuallyFetchTodaysSentenceUC;
 import com.xixicm.de.domain.interactor.RepositorySentenceFetchExecutor;
 import com.xixicm.de.domain.model.event.FetchingEvent;
 import com.xixicm.de.domain.model.event.FocusedSentenceEvent;
 import com.xixicm.de.domain.model.event.UpdateManualFetchFabEvent;
-import com.xixicm.ca.presentation.handler.UseCaseAsyncUIHandler;
-import com.xixicm.ca.presentation.mvp.AbstractMvpPresenter;
 import com.xixicm.de.presentation.contract.Main;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +44,7 @@ public class MainPresenter extends AbstractMvpPresenter<Main.View, Void> impleme
     private ManuallyFetchTodaysSentenceUC mFetchTodaysSentenceUseCase;
 
     public MainPresenter() {
-        this(UseCaseAsyncUIHandler.getInstance(),
+        this(AndroidHandlers.asyncParallelReqSyncRes(),
                 new ManuallyFetchTodaysSentenceUC(new RepositorySentenceFetchExecutor(SentenceDataRepository.getInstance())));
     }
 
@@ -56,7 +56,7 @@ public class MainPresenter extends AbstractMvpPresenter<Main.View, Void> impleme
     @Override
     public void fetchTodaysSentence() {
         // It's OK to reuse the same use case here. Because this use case has no callback.
-        mUseCaseHandler.execute(mFetchTodaysSentenceUseCase);
+        mFetchTodaysSentenceUseCase.execute(mUseCaseHandler);
     }
 
     @Override

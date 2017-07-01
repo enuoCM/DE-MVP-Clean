@@ -69,13 +69,13 @@ public class MainActivity extends MvpActivity<Void, Main.View, Main.Presenter<Ma
     private ObjectAnimator mManualFetchFabAnimator;
     FragmentManager mFragmentManager;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(1, 1, 1, "add");
-        menu.add(2, 2, 2, "delete");
-        return true;
-
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        menu.add(1, 1, 1, "add");
+//        menu.add(2, 2, 2, "delete");
+//        return true;
+//
+//    }
 
     public void duplicateSentences() {
         List<SentenceEntity> se = DaoManager.getInstance().getSentenceEntityDao().queryBuilder().orderDesc(SentenceEntityDao.Properties.Dateline).list();

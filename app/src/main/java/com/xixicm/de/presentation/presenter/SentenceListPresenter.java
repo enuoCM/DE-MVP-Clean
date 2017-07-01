@@ -69,7 +69,6 @@ public class SentenceListPresenter extends AbstractMvpPresenter<SentenceList.Vie
 
     @Override
     public void loadSentences(final boolean firstLoad) {
-        mLoadSentencesUC.setRequestValue(new LoadSentencesUC.LoadSentencesRequestParms(firstLoad, getViewModel().isFavoriteList()));
         if (firstLoad) {
             mView.setLoadingIndicator(true);
             mLoadSentenceCallback = new LoadSentencesUC.LoadSentencesCallback() {
@@ -92,8 +91,9 @@ public class SentenceListPresenter extends AbstractMvpPresenter<SentenceList.Vie
                 }
             };
         }
-        mLoadSentencesUC.setUseCaseCallback(mLoadSentenceCallback);
-        mLoadSentencesUseCaseHandler.execute(mLoadSentencesUC);
+        mLoadSentencesUC.requestParams(new LoadSentencesUC.LoadSentencesRequestParms(firstLoad, getViewModel().isFavoriteList()))
+                .callback(mLoadSentenceCallback)
+                .execute(mLoadSentencesUseCaseHandler);
     }
 
     private int findNeedFocusedPosition(List<? extends Sentence> sentences) {
@@ -121,8 +121,7 @@ public class SentenceListPresenter extends AbstractMvpPresenter<SentenceList.Vie
     @Override
     public void setFavorite(@NonNull Sentence sentence, boolean favorite) {
         sentence.setIsStar(favorite);
-        mUpdateFavoriteSentenceUC.setRequestValue(sentence);
-        mUpdateFavoriteSentenceUseCaseHandler.execute(mUpdateFavoriteSentenceUC);
+        mUpdateFavoriteSentenceUC.requestParams(sentence).execute(mUpdateFavoriteSentenceUseCaseHandler);
     }
 
     @Override

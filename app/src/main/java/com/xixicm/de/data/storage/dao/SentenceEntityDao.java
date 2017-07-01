@@ -22,7 +22,7 @@ public class SentenceEntityDao extends AbstractDao<SentenceEntity, Long> {
     /**
      * Properties of entity SentenceEntity.<br/>
      * Can be used for QueryBuilder and for referencing column names.
-    */
+     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Sid = new Property(1, String.class, "sid", false, "SID");
@@ -30,7 +30,7 @@ public class SentenceEntityDao extends AbstractDao<SentenceEntity, Long> {
         public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
         public final static Property AllContent = new Property(4, String.class, "allContent", false, "ALL_CONTENT");
         public final static Property IsStar = new Property(5, Boolean.class, "isStar", false, "IS_STAR");
-    };
+    }
 
 
     public SentenceEntityDao(DaoConfig config) {
@@ -170,6 +170,11 @@ public class SentenceEntityDao extends AbstractDao<SentenceEntity, Long> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean hasKey(SentenceEntity entity) {
+        return entity.getId() != null;
     }
 
     @Override

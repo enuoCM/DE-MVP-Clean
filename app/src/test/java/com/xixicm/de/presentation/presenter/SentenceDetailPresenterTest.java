@@ -17,6 +17,7 @@ package com.xixicm.de.presentation.presenter;
 
 import android.net.Uri;
 
+import com.xixicm.ca.domain.usecase.UseCase;
 import com.xixicm.de.R;
 import com.xixicm.de.data.entity.SentenceEntity;
 import com.xixicm.de.data.storage.SentenceDataRepository;
@@ -37,6 +38,7 @@ import com.xixicm.de.presentation.contract.SentenceDetail;
 import com.xixicm.de.presentation.model.view.SentenceDetailViewModel;
 
 import org.greenrobot.eventbus.EventBus;
+import org.hamcrest.core.AnyOf;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +48,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.matchers.Any;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
@@ -140,10 +143,20 @@ public class SentenceDetailPresenterTest {
         mModel.setIsFavoriteList(false);
         mModel.setCurrentSentenseId(1L);
         mSentenceDetailPresenter.attachView(mView, mModel);
+        when(mLoadSentencesUC.requestParams(any(LoadSentencesUC.LoadSentencesRequestParms.class))).thenReturn(mLoadSentencesUC);
+        when(mLoadSentencesUC.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mLoadSentencesUC);
         mSentenceDetailPresenter.setLoadSentencesUCAndHandler(mLoadSentencesUC, mLoadSentencesUseCaseHandler);
+        when(mUpdateFavoriteSentenceUC.requestParams(any(Sentence.class))).thenReturn(mUpdateFavoriteSentenceUC);
+        when(mUpdateFavoriteSentenceUC.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mUpdateFavoriteSentenceUC);
         mSentenceDetailPresenter.setUpdateFavoriteSentenceUCAndHandler(mUpdateFavoriteSentenceUC, mUpdateFavoriteSentenceUseCaseHandler);
+        when(mFetchSentenceAudioUC.requestParams(any(FetchSentenceAudioUC.FetchSentenceAudioRequestParms.class))).thenReturn(mFetchSentenceAudioUC);
+        when(mFetchSentenceAudioUC.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mFetchSentenceAudioUC);
         mSentenceDetailPresenter.setFetchSentenceAudioUCAndHandler(mFetchSentenceAudioUC, mFetchSentenceAudioUseCaseHander);
+        when(mGetPlayStyleUCForPrepareMenu.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mGetPlayStyleUCForPrepareMenu);
+        when(mGetPlayStyleUCForPlayAudio.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mGetPlayStyleUCForPlayAudio);
         mSentenceDetailPresenter.setGetPlayStyleUCAndHandler(mGetPlayStyleUCForPrepareMenu, mGetPlayStyleUCForPlayAudio, mGetPlayStyleUseCaseHandler);
+        when(mSetPlayStyleUC.requestParams(any(Integer.class))).thenReturn(mSetPlayStyleUC);
+        when(mSetPlayStyleUC.callback(any(UseCase.UseCaseCallback.class))).thenReturn(mSetPlayStyleUC);
         mSentenceDetailPresenter.setSetPlayStyleUCAndHandler(mSetPlayStyleUC, mSetPlayStyleUseCaseHandler);
         mSentenceDetailPresenter = spy(mSentenceDetailPresenter);
         when(mSentenceDetailPresenter.getEventBus()).thenReturn(mEventBus);
@@ -163,13 +176,13 @@ public class SentenceDetailPresenterTest {
     @Test
     public void testLoadSentences_First_EmptyList_NoNeedLoadCurrent() {
         mSentenceDetailPresenter.loadSentences(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // empty list
         when(mSentences.size()).thenReturn(0);
@@ -184,13 +197,13 @@ public class SentenceDetailPresenterTest {
     public void testLoadSentences_First_EmptyList_NeedLoadCurrent_Success() {
         mModel.setIsFavoriteList(true);
         mSentenceDetailPresenter.loadSentences(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // empty list
         when(mSentences.size()).thenReturn(0);
@@ -218,13 +231,13 @@ public class SentenceDetailPresenterTest {
     public void testLoadSentences_First_EmptyList_NeedLoadCurrent_Fail() {
         mModel.setIsFavoriteList(true);
         mSentenceDetailPresenter.loadSentences(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // empty list
         when(mSentences.size()).thenReturn(0);
@@ -248,13 +261,13 @@ public class SentenceDetailPresenterTest {
     @Test
     public void testLoadSentences_First_NotEmptyList() {
         mSentenceDetailPresenter.loadSentences(true);
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertTrue(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         assertNotNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
 
         // not empty list
         when(mSentences.size()).thenReturn(2);
@@ -274,14 +287,14 @@ public class SentenceDetailPresenterTest {
     public void testLoadSentences_NotFirst() {
         mSentenceDetailPresenter.loadSentences(false);
 
-        verify(mLoadSentencesUC).setRequestValue(mLoadSentencesRequestParmsCaptor.capture());
+        verify(mLoadSentencesUC).requestParams(mLoadSentencesRequestParmsCaptor.capture());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFavorite());
         assertFalse(mLoadSentencesRequestParmsCaptor.getValue().isFirstLoad());
-        verify(mLoadSentencesUC).setUseCaseCallback(mLoadSentencesCallbackCaptor.capture());
+        verify(mLoadSentencesUC).callback(mLoadSentencesCallbackCaptor.capture());
         LoadSentencesUC.LoadSentencesCallback callback = mLoadSentencesCallbackCaptor.getValue();
         // mLoadSentencesUC#mLoadSentenceCallback is not initialized under this test
         assertNull(callback);
-        verify(mLoadSentencesUseCaseHandler).execute(mLoadSentencesUC);
+        verify(mLoadSentencesUC).execute(mLoadSentencesUseCaseHandler);
     }
 
     @Test
@@ -289,18 +302,18 @@ public class SentenceDetailPresenterTest {
         mModel.setCurrentAudioUrl("audio1");
         mModel.setPlayToken(System.currentTimeMillis());
         mSentenceDetailPresenter.fetchSentenceAudio();
-        verify(mFetchSentenceAudioUC).setRequestValue(mFetchSentenceAudioRequestParmsCaptor.capture());
+        verify(mFetchSentenceAudioUC).requestParams(mFetchSentenceAudioRequestParmsCaptor.capture());
         assertEquals(mFetchSentenceAudioRequestParmsCaptor.getValue().getAudioUrl(), mModel.getCurrentAudioUrl());
         assertEquals(mFetchSentenceAudioRequestParmsCaptor.getValue().getToken(), mModel.getPlayToken());
-        verify(mFetchSentenceAudioUseCaseHander).execute(mFetchSentenceAudioUC);
+        verify(mFetchSentenceAudioUC).execute(mFetchSentenceAudioUseCaseHander);
     }
 
     @Test
     public void testSetPlayStyle_Once() {
         mSentenceDetailPresenter.setPlayStyle(Constants.PLAY_ONCE);
-        verify(mSetPlayStyleUC).setRequestValue(mSetPlayStyleParmsCaptor.capture());
+        verify(mSetPlayStyleUC).requestParams(mSetPlayStyleParmsCaptor.capture());
         assertEquals(mSetPlayStyleParmsCaptor.getValue().intValue(), mModel.getPlayStyle());
-        verify(mSetPlayStyleUseCaseHandler).execute(mSetPlayStyleUC);
+        verify(mSetPlayStyleUC).execute(mSetPlayStyleUseCaseHandler);
         // not loop
         verify(mAudioPlayer).setLooping(false);
     }
@@ -308,9 +321,9 @@ public class SentenceDetailPresenterTest {
     @Test
     public void testSetPlayStyle_Repeat() {
         mSentenceDetailPresenter.setPlayStyle(Constants.PLAY_REPEAT);
-        verify(mSetPlayStyleUC).setRequestValue(mSetPlayStyleParmsCaptor.capture());
+        verify(mSetPlayStyleUC).requestParams(mSetPlayStyleParmsCaptor.capture());
         assertEquals(mSetPlayStyleParmsCaptor.getValue().intValue(), mModel.getPlayStyle());
-        verify(mSetPlayStyleUseCaseHandler).execute(mSetPlayStyleUC);
+        verify(mSetPlayStyleUC).execute(mSetPlayStyleUseCaseHandler);
         // not loop
         verify(mAudioPlayer).setLooping(true);
     }
@@ -322,8 +335,8 @@ public class SentenceDetailPresenterTest {
         mSentenceDetailPresenter.setFavorite(sentence, true);
         assertTrue(sentence.getIsStar());
         // execute update
-        verify(mUpdateFavoriteSentenceUC).setRequestValue(sentence);
-        verify(mUpdateFavoriteSentenceUseCaseHandler).execute(mUpdateFavoriteSentenceUC);
+        verify(mUpdateFavoriteSentenceUC).requestParams(sentence);
+        verify(mUpdateFavoriteSentenceUC).execute(mUpdateFavoriteSentenceUseCaseHandler);
     }
 
     @Test
@@ -332,8 +345,8 @@ public class SentenceDetailPresenterTest {
         mSentenceDetailPresenter.setFavorite(sentence, false);
         assertFalse(sentence.getIsStar());
         // execute update
-        verify(mUpdateFavoriteSentenceUC).setRequestValue(sentence);
-        verify(mUpdateFavoriteSentenceUseCaseHandler).execute(mUpdateFavoriteSentenceUC);
+        verify(mUpdateFavoriteSentenceUC).requestParams(sentence);
+        verify(mUpdateFavoriteSentenceUC).execute(mUpdateFavoriteSentenceUseCaseHandler);
     }
 
     @Test
@@ -477,8 +490,8 @@ public class SentenceDetailPresenterTest {
         verify(mView).updateAudioFabAnimator(SentenceDetailViewModel.AUDIO_STATUS.PLAYING);
 
         // get play style first
-        verify(mGetPlayStyleUCForPlayAudio).setUseCaseCallback(mGetPlayStyleCallbackCaptor.capture());
-        verify(mGetPlayStyleUseCaseHandler).execute(mGetPlayStyleUCForPlayAudio);
+        verify(mGetPlayStyleUCForPlayAudio).callback(mGetPlayStyleCallbackCaptor.capture());
+        verify(mGetPlayStyleUCForPlayAudio).execute(mGetPlayStyleUseCaseHandler);
         GetPlayStyleUC.GetPlayStyleCallback callback = mGetPlayStyleCallbackCaptor.getValue();
         assertNotNull(callback);
         // result is repeat
@@ -577,7 +590,7 @@ public class SentenceDetailPresenterTest {
         mModel.setPlayStyle(Constants.PLAY_UNKNOWN);
         mSentenceDetailPresenter.onPrepareOptionsMenu();
         // get play style first
-        verify(mGetPlayStyleUCForPrepareMenu).setUseCaseCallback(mGetPlayStyleCallbackCaptor.capture());
+        verify(mGetPlayStyleUCForPrepareMenu).callback(mGetPlayStyleCallbackCaptor.capture());
         verify(mGetPlayStyleUseCaseHandler).execute(mGetPlayStyleUCForPrepareMenu);
         GetPlayStyleUC.GetPlayStyleCallback callback = mGetPlayStyleCallbackCaptor.getValue();
         assertNotNull(callback);

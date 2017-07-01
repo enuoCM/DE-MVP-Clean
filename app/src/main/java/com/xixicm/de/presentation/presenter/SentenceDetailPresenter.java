@@ -15,16 +15,16 @@
  */
 package com.xixicm.de.presentation.presenter;
 
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
-import android.text.TextUtils;
 
+import com.xixicm.ca.domain.handler.UseCaseHandler;
+import com.xixicm.ca.presentation.handler.AndroidHandlers;
+import com.xixicm.ca.presentation.mvp.AbstractMvpPresenter;
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
 import com.xixicm.de.domain.Constants;
-import com.xixicm.ca.domain.handler.UseCaseHandler;
 import com.xixicm.de.domain.interactor.FetchSentenceAudioUC;
 import com.xixicm.de.domain.interactor.GetPlayStyleUC;
 import com.xixicm.de.domain.interactor.LoadSentenceUC;
@@ -36,8 +36,6 @@ import com.xixicm.de.domain.model.event.FetchingAudioEvent;
 import com.xixicm.de.domain.model.event.FetchingEvent;
 import com.xixicm.de.domain.model.event.FocusedSentenceEvent;
 import com.xixicm.de.infrastructure.media.AudioPlayer;
-import com.xixicm.ca.presentation.handler.UseCaseAsyncUIHandler;
-import com.xixicm.ca.presentation.mvp.AbstractMvpPresenter;
 import com.xixicm.de.presentation.contract.SentenceDetail;
 import com.xixicm.de.presentation.model.view.SentenceDetailViewModel;
 
@@ -132,7 +130,6 @@ public class SentenceDetailPresenter extends AbstractMvpPresenter<SentenceDetail
 
     @Override
     public void loadSentences(boolean firstLoad) {
-        mLoadSentencesUC.setRequestValue(new LoadSentencesUC.LoadSentencesRequestParms(firstLoad, getViewModel().isFavoriteList()));
         if (firstLoad) {
             mLoadSentenceCallback = new LoadSentencesUC.LoadSentencesCallback() {
                 @Override
@@ -159,15 +156,14 @@ public class SentenceDetailPresenter extends AbstractMvpPresenter<SentenceDetail
                 }
             };
         }
-        mLoadSentencesUC.setUseCaseCallback(mLoadSentenceCallback);
-        mLoadSentencesUseCaseHandler.execute(mLoadSentencesUC);
+        mLoadSentencesUC.requestParams(new LoadSentencesUC.LoadSentencesRequestParms(firstLoad, getViewModel().isFavoriteList()))
+                .callback(mLoadSentenceCallback)
+                .execute(mLoadSentencesUseCaseHandler);
     }
 
     public void loadCurrentSentense(LoadSentenceUC.LoadSentenceCallback callback) {
-        LoadSentenceUC loadSentenceUC = new LoadSentenceUC(SentenceDataRepository.getInstance());
-        loadSentenceUC.setRequestValue(getViewModel().getCurrentSentenseId());
-        loadSentenceUC.setUseCaseCallback(callback);
-        UseCaseAsyncUIHandler.getInstance().execute(loadSentenceUC);
+        new LoadSentenceUC(SentenceDataRepository.getInstance()).requestParams(getViewModel().getCurrentSentenseId()).callback(callback)
+                .execute(AndroidHandlers.asyncParallelReqSyncRes());
     }
 
     private void showSentenceList(List<? extends Sentence> sentences) {
@@ -198,23 +194,21 @@ public class SentenceDetailPresenter extends AbstractMvpPresenter<SentenceDetail
 
     @Override
     public void fetchSentenceAudio() {
-        mFetchSentenceAudioUC.setRequestValue(new FetchSentenceAudioUC.FetchSentenceAudioRequestParms(getViewModel().getCurrentAudioUrl(), getViewModel().getPlayToken()));
-        mFetchSentenceAudioUseCaseHander.execute(mFetchSentenceAudioUC);
+        mFetchSentenceAudioUC.requestParams(new FetchSentenceAudioUC.FetchSentenceAudioRequestParms(getViewModel().getCurrentAudioUrl(), getViewModel().getPlayToken()))
+                .execute(mFetchSentenceAudioUseCaseHander);
     }
 
     @Override
     public void setPlayStyle(int style) {
         getViewModel().setPlayStyle(style);
-        mSetPlayStyleUC.setRequestValue(style);
-        mSetPlayStyleUseCaseHandler.execute(mSetPlayStyleUC);
+        mSetPlayStyleUC.requestParams(style).execute(mSetPlayStyleUseCaseHandler);
         mAudioPlayer.setLooping(style == Constants.PLAY_REPEAT);
     }
 
     @Override
     public void setFavorite(@NonNull Sentence sentence, boolean favorite) {
         sentence.setIsStar(favorite);
-        mUpdateFavoriteSentenceUC.setRequestValue(sentence);
-        mUpdateFavoriteSentenceUseCaseHandler.execute(mUpdateFavoriteSentenceUC);
+        mUpdateFavoriteSentenceUC.requestParams(sentence).execute(mUpdateFavoriteSentenceUseCaseHandler);
     }
 
     @Override
@@ -299,7 +293,7 @@ public class SentenceDetailPresenter extends AbstractMvpPresenter<SentenceDetail
     @Override
     public void onPrepareOptionsMenu() {
         if (getViewModel().getPlayStyle() == Constants.PLAY_UNKNOWN) {
-            mGetPlayStyleUCForPrepareMenu.setUseCaseCallback(new GetPlayStyleUC.GetPlayStyleCallback() {
+            mGetPlayStyleUCForPrepareMenu.callback(new GetPlayStyleUC.GetPlayStyleCallback() {
                 @Override
                 public void onPlayStyleGet(int playStyle) {
                     getViewModel().setPlayStyle(playStyle);
@@ -358,14 +352,14 @@ public class SentenceDetailPresenter extends AbstractMvpPresenter<SentenceDetail
     private void startMediaPlayer() {
         if (getViewModel().getPlayStyle() == Constants.PLAY_UNKNOWN) {
             // have not got the play style.
-            mGetPlayStyleUCForPlayAudio.setUseCaseCallback(new GetPlayStyleUC.GetPlayStyleCallback() {
+            mGetPlayStyleUCForPlayAudio.callback(new GetPlayStyleUC.GetPlayStyleCallback() {
                 @Override
                 public void onPlayStyleGet(int playStyle) {
                     getViewModel().setPlayStyle(playStyle);
                     startMediaPlayer();
                 }
             });
-            mGetPlayStyleUseCaseHandler.execute(mGetPlayStyleUCForPlayAudio);
+            mGetPlayStyleUCForPlayAudio.execute(mGetPlayStyleUseCaseHandler);
         } else {
             mAudioPlayer.setLooping(getViewModel().getPlayStyle() == Constants.PLAY_REPEAT);
             mAudioPlayer.startMediaPlayer(mSentenceDataRepository.getAudioFile(getViewModel().getCurrentAudioUrl()));

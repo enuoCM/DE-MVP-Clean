@@ -26,15 +26,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
+import com.xixicm.ca.presentation.handler.AndroidHandlers;
+import com.xixicm.ca.presentation.mvp.MvpFragment;
 import com.xixicm.de.R;
 import com.xixicm.de.data.storage.SentenceDataRepository;
-import com.xixicm.ca.domain.handler.DefaultUseCaseHandler;
 import com.xixicm.de.domain.interactor.LoadSentencesUC;
 import com.xixicm.de.domain.interactor.UpdateFavoriteSentenceUC;
 import com.xixicm.de.domain.model.Sentence;
 import com.xixicm.de.infrastructure.loader.AsyncTaskSentenceLoadExecutor;
-import com.xixicm.ca.presentation.handler.UseCaseAsyncUIHandler;
-import com.xixicm.ca.presentation.mvp.MvpFragment;
 import com.xixicm.de.presentation.contract.SentenceList;
 import com.xixicm.de.presentation.model.view.SentenceListViewModel;
 import com.xixicm.de.presentation.presenter.SentenceListPresenter;
@@ -83,7 +83,7 @@ public class SentenceListFragment extends
         // because we use async task loader, we can use sync handler here
         presenter.setLoadSentencesUCAndHandler(loadSentencesUC, DefaultUseCaseHandler.createSyncUCHandler());
         UpdateFavoriteSentenceUC updateFavoriteSentenceUC = new UpdateFavoriteSentenceUC(SentenceDataRepository.getInstance());
-        presenter.setUpdateFavoriteSentenceUCAndHandler(updateFavoriteSentenceUC, UseCaseAsyncUIHandler.getInstance());
+        presenter.setUpdateFavoriteSentenceUCAndHandler(updateFavoriteSentenceUC, AndroidHandlers.asyncParallelReqSyncRes());
         return presenter;
     }
 
